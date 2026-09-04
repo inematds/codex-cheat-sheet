@@ -16,7 +16,7 @@ A practical reference for using OpenAI Codex CLI effectively. Focuses on pattern
 
 ```bash
 # Install with the official installer (recommended)
-# See GitHub releases for installers: https://github.com/openai/codex/releases
+curl -fsSL https://chatgpt.com/codex/install.sh | sh
 
 # Or with npm
 npm install -g @openai/codex
@@ -27,8 +27,11 @@ brew install --cask codex
 # Or with pnpm (official monorepo manager)
 pnpm install -g @openai/codex
 
-# Windows: Direct install script
-# Run: .\install.ps1 from https://github.com/openai/codex/releases
+# Windows: Official install script
+powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"
+
+# Self-update (installer installs)
+codex update
 
 # Launch Codex
 codex
@@ -63,15 +66,20 @@ brew install --cask codex
 # Install with pnpm (official monorepo manager)
 pnpm install -g @openai/codex
 
+# Official standalone installer (macOS/Linux)
+curl -fsSL https://chatgpt.com/codex/install.sh | sh
+
+# Windows: Official install script
+powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"
+
 # Update with npm
-npm update -g @openai/codex
+npm install -g @openai/codex
 
 # Update with Homebrew
-brew upgrade codex
+brew upgrade --cask codex
 
-# Windows: Use the install.ps1 script
-# Download from: https://github.com/openai/codex/releases/latest
-# Run: .\install.ps1
+# Self-update (when the installed release supports it)
+codex update
 
 # Download binary from GitHub releases
 # Visit: https://github.com/openai/codex/releases/latest
@@ -107,6 +115,15 @@ codex
 printenv OPENAI_API_KEY | codex login --with-api-key
 # Or from a file:
 codex login --with-api-key < my_key.txt
+
+# Use an access token
+printenv CODEX_ACCESS_TOKEN | codex login --with-access-token
+
+# Device authentication
+codex login --device-auth
+
+# Check login status (exit 0 = credentials present)
+codex login status
 ```
 
 </details>
@@ -116,11 +133,14 @@ codex login --with-api-key < my_key.txt
 
 ```bash
 # Keyboard shortcuts
-Ctrl+C                    # Cancel current operation
-Ctrl+D                    # Exit Codex
-Tab                       # Auto-complete
-↑/↓                       # Command history
-Esc Esc                   # Edit previous message
+Ctrl+C                    # Cancel current operation (or run /exit to close the session)
+Tab                       # Queue a follow-up prompt, slash command, or shell command while Codex is working
+↑/↓                       # Restore draft history
+Esc Esc                   # Edit previous message (empty composer; forks the chat from that point)
+Ctrl+R                    # Search prompt history
+Ctrl+O                    # Copy the latest completed output
+Enter                     # Inject new instructions into the current turn
+!command                  # Run a local shell command under current approval/sandbox settings
 
 # Special input
 @                         # Trigger file search (fuzzy find)
@@ -336,10 +356,12 @@ Configuration and customization options.
 
 ```bash
 # Config file location: ~/.codex/config.toml
+# Project overrides: .codex/config.toml (loaded only for trusted projects;
+# provider/auth/notification/telemetry keys are ignored in project-scoped files)
 
 # Edit config manually or use CLI flags
-codex --model gpt-5 "your prompt"
-codex --config model="gpt-5"
+codex --model gpt-5.6-terra "your prompt"
+codex --config model="gpt-5.6-terra"
 
 # Common configurations in config.toml:
 # - model selection
@@ -464,11 +486,24 @@ bearer_token_env_var = "FIGMA_TOKEN"
 
 # MCP CLI commands
 codex mcp list                        # List configured servers
-codex mcp add <name> -- <command>     # Add a server
+codex mcp add <name> -- <command>     # Add a stdio server
+codex mcp add <name> --url <URL>      # Add a streamable HTTP server
 codex mcp get <name>                  # Show server details
 codex mcp remove <name>               # Remove a server
 codex mcp login <name>                # OAuth login (streamable HTTP)
 codex mcp logout <name>               # OAuth logout
+
+# Make startup fail if a server cannot initialize:
+[mcp_servers.figma]
+url = "https://mcp.figma.com/mcp"
+required = true
+
+# Plugins are the stable surface for packaged integrations
+codex plugin list                     # List plugins from configured marketplaces
+codex plugin add <plugin>             # Install a plugin (or PLUGIN@MARKETPLACE)
+codex plugin marketplace list         # Manage plugin marketplaces
+
+# Note: codex mcp-server is deprecated; use the app server instead
 
 # Popular MCP servers:
 # - Context7 (developer documentation)
@@ -530,8 +565,11 @@ codex exec --json "analyze this project"
 # Structured output with JSON schema
 codex exec --output-schema schema.json "extract project details"
 
-# Save output to file
+# Save output to file (writes only the agent's last message, not the full run)
 codex exec -o output.txt "generate docs"
+
+# Pair with --json in CI: JSONL events to stdout + final summary to the file
+codex exec --json -o output.txt "generate docs"
 ```
 
 See [Non-Interactive Mode (exec)](https://developers.openai.com/codex/non-interactive-mode) for details.
@@ -624,7 +662,7 @@ The `/goal` command sets a persisted objective for a long-running task. It loops
 
 > **Note:** Define one measurable stop condition. Use `/goal pause` or `/goal clear` if it drifts. Run on a scratch branch.
 
-See [OpenAI's follow-a-goal docs](https://developers.openai.com/codex/cli/slash-commands) for details.
+See [OpenAI's follow-a-goal docs](https://developers.openai.com/codex/developer-commands#set-or-view-a-task-goal-with-goal) for details.
 
 </details>
 
@@ -948,7 +986,7 @@ codex "Refactor this code to:
 - [Official Repository](https://github.com/openai/codex) - Main repository and documentation hub
 - [Getting Started Guide](https://developers.openai.com/codex/quickstart) - Comprehensive getting started guide
 - [Configuration Reference](https://developers.openai.com/codex/configuration) - Complete config.toml reference
-- [Slash Commands](https://developers.openai.com/codex/reference/slash-commands) - All slash commands explained
+- [Developer Commands](https://developers.openai.com/codex/developer-commands) - CLI commands, flags, and slash commands
 - [Non-Interactive Mode (exec)](https://developers.openai.com/codex/non-interactive-mode) - Automation with codex exec
 - [Authentication](https://developers.openai.com/codex/auth) - Authentication methods
 - [Sandbox & Approvals](https://developers.openai.com/codex/sandboxing) - Security and sandboxing
