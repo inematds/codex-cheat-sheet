@@ -228,7 +228,8 @@ codex --add-dir ../backend --add-dir ../shared "analyze all"
 
 # Approval settings
 codex --ask-for-approval untrusted    # Ask for untrusted commands
-codex -a on-failure                   # Ask on command failure
+codex -a on-request                   # Model decides when to ask (interactive)
+codex exec -a never "task"            # Never ask (non-interactive runs)
 
 # Sandbox settings
 codex --sandbox read-only             # Read-only sandbox (default)
@@ -400,11 +401,10 @@ sandbox_mode = "read-only"              # Default: read-only
 sandbox_mode = "workspace-write"        # Allow writes in workspace
 sandbox_mode = "danger-full-access"     # Disable sandbox (dangerous!)
 
-# Configure approval policy
+# Configure approval policy (valid: untrusted | on-request | never; "on-failure" is deprecated)
 approval_policy = "untrusted"           # Prompt for untrusted commands
-approval_policy = "on-failure"          # Prompt on command failure
-approval_policy = "on-request"          # Model decides when to ask
-approval_policy = "never"               # Never prompt (exec default)
+approval_policy = "on-request"          # Model decides when to ask (interactive)
+approval_policy = "never"               # Never prompt (non-interactive runs)
 
 # Workspace-write options
 [sandbox_workspace_write]
