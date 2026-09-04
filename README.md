@@ -1029,8 +1029,8 @@ This cheat sheet was inspired by the excellent [claude-code-cheat-sheet](https:/
 
 All commands and examples are verified against the [official OpenAI Codex documentation](https://developers.openai.com/codex).
 
-**Last updated: July 2026**  
-**Based on**: OpenAI Codex CLI (npm: @openai/codex)
+**Last updated: September 2026**  
+**Based on**: OpenAI Codex CLI (codex-cli 0.147.0, npm: @openai/codex)
 
 ---
-*Last synced: 2026-07-19 via [workspace manager](https://github.com/BA-CalderonMorales)*
+*Last synced: 2026-09-03 via [workspace manager](https://github.com/BA-CalderonMorales)*
