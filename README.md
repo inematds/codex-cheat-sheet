@@ -144,12 +144,11 @@ Core commands for everyday use.
 /new                      # Start a new chat during conversation
 /init                     # Create an AGENTS.md file with instructions
 /compact                  # Summarize conversation to prevent context limit
-/debug                    # Toggle debug mode for detailed logging
 /diff                     # Show git diff (including untracked files)
 /mention                  # Mention a file
 /status                   # Show current session config and token usage
 /mcp                      # List configured MCP tools
-/side                     # Start an ephemeral side conversation
+/side                     # Start an ephemeral side conversation (/btw)
 /fork                     # Fork the current conversation into a new thread
 /ps                       # Show background terminals and their output
 /stop                     # Stop all background terminals
@@ -158,6 +157,35 @@ Core commands for everyday use.
 /exit                     # Exit Codex
 /feedback                 # Send logs to maintainers
 /goal                     # Set or view a persistent task goal
+/plan                     # Switch to plan mode for multi-step planning
+/approve                  # Approve one retry of an automatic-review denial
+/copy                     # Copy the latest completed output (or Ctrl+O)
+/clear                    # Clear the terminal and start a new chat
+/rename                   # Rename the current chat
+/archive                  # Archive the current session and exit Codex
+/delete                   # Permanently delete the current session and exit
+/resume                   # Resume a saved chat from your session list
+/app                      # Continue the session in the ChatGPT desktop app
+/agent                    # Switch the active agent thread (also /subagents)
+/apps                     # Browse apps (connectors) and insert into the prompt
+/plugins                  # Browse installed and discoverable plugins
+/hooks                    # View and manage lifecycle hooks
+/memories                 # Configure memory use and generation
+/import                   # Import Claude Code or Cursor setup
+/experimental             # Toggle experimental features
+/usage                    # View account token usage
+/debug-config             # Print config layer diagnostics
+/statusline               # Configure TUI footer items
+/title                    # Configure terminal title items
+/theme                    # Choose a syntax theme
+/pets                     # Choose or hide a terminal pet (/pet)
+/keymap                   # Remap TUI keyboard shortcuts
+/vim                      # Toggle Vim mode for the composer
+/ide                      # Include open files and IDE context
+/raw                      # Toggle raw scrollback mode
+/skills                   # Browse and use skills
+
+# /debug is no longer documented; use /debug-config for config diagnostics
 ```
 
 </details>
