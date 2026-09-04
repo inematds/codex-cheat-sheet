@@ -217,7 +217,7 @@ codex exec resume --last              # Resume last non-interactive session
 ```bash
 # Model selection
 codex --model gpt-5 "your prompt"
-codex -m o3 "complex task"
+codex -m gpt-5.6-terra "complex task"
 
 # Working directory
 codex --cd /path/to/project           # Change working directory
@@ -277,30 +277,39 @@ codex --config model="gpt-5"
 
 ```bash
 # Set model in config.toml
-model = "gpt-5.6-sol"              # Flagship: complex coding, computer use, research (recommended, July 2026)
+model = "gpt-6-astra"               # New flagship: hardest end-to-end work across code, apps, research (rolling out)
+model = "gpt-5.6-sol"              # Flagship: complex coding, computer use, research (recommended, September 2026)
 model = "gpt-5.6-terra"            # Balanced: everyday coding and knowledge work
 model = "gpt-5.6-luna"             # Fast: lightweight tasks, lowest cost
 
-# For reasoning models (gpt-5.6-sol, gpt-5.6-terra):
-model_reasoning_effort = "medium"  # minimal, low, medium, high
+# For reasoning models (gpt-6-astra, gpt-5.6-sol, gpt-5.6-terra):
+model_reasoning_effort = "medium"  # minimal, low, medium, high, xhigh
 model_reasoning_summary = "auto"   # auto, concise, detailed, none
 
 # For GPT-5 family models:
 model_verbosity = "medium"         # low, medium, high
 
-# Models available (as of July 2026):
+# Models available (as of September 2026):
+# - gpt-6-astra - New flagship for complex work across code, apps, and research (rolling out)
 # - gpt-5.6-sol (recommended) - Flagship for complex coding, computer use, research, security work
 # - gpt-5.6-terra - Balances capability and cost for everyday coding and knowledge work
 # - gpt-5.6-luna - Fastest, lowest-cost option for lightweight tasks
-# - gpt-5 (legacy) - Original GPT-5 (still available)
+# - gpt-5.3-codex-spark - Text-only research preview for near-instant coding iteration (ChatGPT Pro)
+# - gpt-5.5 - Previous-generation flagship
+# - gpt-5.4 / gpt-5.4-mini - Retired from Codex with ChatGPT sign-in on Aug 31, 2026
+# - gpt-5.2 / gpt-5.3-codex - Deprecated in Codex with ChatGPT sign-in
 # - Other OpenAI models via custom providers
 ```
 
-### GPT-5.6 Updates (July 2026)
+### Model Updates (September 2026)
 
-**GPT-5.6 Sol** is the new flagship model:
+**GPT-6 Astra** is the new flagship model, rolling out across clients:
+- Purpose-built for the hardest end-to-end work across code, apps, and research
+- Combines advanced reasoning, computer use, and stronger judgment
+- Use it when a task needs sustained reasoning across multiple steps and tools
+
+**GPT-5.6 Sol** remains the GPT-5.6 flagship:
 - Purpose-built for complex coding, computer use, research, and security work
-- Default Power setting uses Sol with medium reasoning effort
 - Superior instruction following and technical accuracy
 
 **GPT-5.6 Terra** balances capability and cost:
@@ -311,7 +320,9 @@ model_verbosity = "medium"         # low, medium, high
 - Ideal for lightweight tasks and quick iterations
 - Maintains quality while minimizing latency
 
-See [GPT-5.6 announcement](https://openai.com/index/gpt-5-6/) for details.
+**Retirements:** gpt-5.4 and gpt-5.4-mini retired from Codex with ChatGPT sign-in on August 31, 2026 (replace with gpt-5.6-terra and gpt-5.6-luna); gpt-5.2 and gpt-5.3-codex are deprecated. The OpenAI API and API-key sign-in are unaffected.
+
+See the [official Models page](https://developers.openai.com/codex/models) for details.
 
 </details>
 
