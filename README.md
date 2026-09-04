@@ -425,8 +425,11 @@ See [Sandbox & Approvals](https://developers.openai.com/codex/sandboxing) for de
 # Execute and exit with codex exec
 codex exec "summarize all TODO comments in this project"
 
-# Allow file edits
-codex exec --full-auto "refactor this code"
+# Auto-review approvals (workspace-write sandbox, automatic review)
+codex exec --approve-for-me "refactor this code"
+
+# Fully unattended (dangerous - skips all approvals and sandboxing)
+codex exec --dangerously-bypass-approvals-and-sandbox "refactor this code"
 
 # Full access (dangerous!)
 codex exec --sandbox danger-full-access "your task"
