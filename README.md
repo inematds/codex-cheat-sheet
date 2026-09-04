@@ -212,6 +212,35 @@ codex exec resume --last              # Resume last non-interactive session
 </details>
 
 <details>
+<summary><strong>Subcommand Reference (0.147.0)</strong></summary>
+
+| Command | Purpose |
+|---|---|
+| `codex exec` | Run non-interactively (alias: `e`) |
+| `codex review` | Non-interactive code review (see [section below](#level-4-advanced-features)) |
+| `codex login` / `codex logout` | Manage authentication; `codex login status` checks credentials |
+| `codex resume` | Resume a saved session (picker; `--last` for most recent) |
+| `codex fork` | Fork a session into a new chat |
+| `codex archive` / `codex unarchive` | Archive / restore saved sessions |
+| `codex delete` | Permanently delete a session |
+| `codex apply` | Apply a Codex Cloud chat diff to the local working tree (alias: `a`) |
+| `codex cloud` | Browse or execute Codex Cloud tasks (Experimental) |
+| `codex plugin` | Install, list, and remove plugins; `codex plugin marketplace` manages sources |
+| `codex mcp` | Manage MCP servers (list, add, remove, authenticate) |
+| `codex mcp-server` | Deprecated; use the app server instead |
+| `codex doctor` | Diagnose install, config, auth, and runtime health |
+| `codex features` | Inspect feature flags (list / enable / disable) |
+| `codex sandbox` | Run commands inside a Codex-provided sandbox |
+| `codex update` | Self-update to the latest version |
+| `codex completion` | Generate shell completions (bash, zsh, fish, powershell) |
+| `codex app-server` | Run the app server (Experimental) |
+| `codex exec-server` | Run the standalone exec-server service (Experimental) |
+| `codex remote-control` | Manage the app-server daemon with remote control (Experimental) |
+| `codex debug` | Debugging tools (experimental subcommands) |
+
+</details>
+
+<details>
 <summary><strong>Useful CLI Flags</strong></summary>
 
 ```bash
@@ -239,6 +268,28 @@ codex --sandbox danger-full-access    # Disable sandbox (dangerous!)
 # Image input
 codex -i screenshot.png "explain this error"
 codex --image img1.png,img2.jpg "summarize these diagrams"
+
+# Live web search
+codex --search "what is the latest version of X"
+
+# Approval automation
+codex --approve-for-me "refactor this"                     # Auto-review approvals
+codex --dangerously-bypass-approvals-and-sandbox "task"    # No approvals, no sandbox (alias: --yolo)
+codex --yolo "task"                                        # Short alias of the above
+
+# Strict config
+codex --strict-config                                      # Error on unknown config.toml fields
+
+# Local open-source providers
+codex --oss                                                # Use local open-source provider
+codex --oss --local-provider ollama                        # Choose provider (lmstudio | ollama)
+
+# Config profiles
+codex -p work "your prompt"                                # Layer ~/.codex/work.config.toml
+
+# Remote app server
+codex --remote ws://host:port                              # Connect TUI to a remote app server
+codex --remote wss://host:port --remote-auth-token-env TOKEN_ENV  # Bearer token from env var
 
 # Shell completions
 codex completion bash                 # Generate bash completions
@@ -456,6 +507,23 @@ codex exec -o output.txt "generate docs"
 ```
 
 See [Non-Interactive Mode (exec)](https://developers.openai.com/codex/non-interactive-mode) for details.
+
+</details>
+
+<details>
+<summary><strong>Non-Interactive Code Review</strong></summary>
+
+Run a dedicated review without launching the TUI. Reports prioritized findings without modifying the working tree.
+
+```bash
+codex review --uncommitted                    # Review staged, unstaged, and untracked changes
+codex review --base main                      # Review changes against a base branch
+codex review --commit <SHA>                   # Review the changes introduced by a commit
+codex review --uncommitted --title "wip: auth"  # Optional title in the review summary
+codex review "focus on security issues"       # Custom review instructions
+```
+
+See [Code Review](https://developers.openai.com/codex/code-review) for details.
 
 </details>
 
