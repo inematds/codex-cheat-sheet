@@ -12,6 +12,8 @@ A practical reference for using OpenAI Codex CLI effectively. Focuses on pattern
 
 </div>
 
+🇧🇷 [Versão em português](README.pt-BR.md)
+
 ## 📖 Guia de uso
 
 Guia completo (landing + passo a passo): **https://inematds.github.io/codex-cheat-sheet/guia/**
